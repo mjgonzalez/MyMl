@@ -3,7 +3,7 @@ package myml
 
 
 class QuestionController {
-	def questionService
+	QuestionService questionService
 	def defaultAction = 'pendingQuestions'
 		
 	def pendingQuestions = {
@@ -12,7 +12,7 @@ class QuestionController {
 	
 	def answerQuestion = {
 		questionService.answerQuestion(params.questionId as Long, params.responseText)
-		render "ok"
+		render "hola"
 	}
 	
 	def deleteQuestion = {
