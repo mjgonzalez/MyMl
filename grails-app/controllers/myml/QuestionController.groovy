@@ -19,7 +19,4 @@ class QuestionController {
 		questionService.deleteQuestion(params.questionId as Long)
 		render "ok"
 	}
-	
-	
-	
 }

@@ -5,7 +5,7 @@ class Question {
 	Long id
 	String questionText
 	String answerText
-	Long itemId
+	Long itemIdas
 	Long askerId
 	Long sellerId
 	
