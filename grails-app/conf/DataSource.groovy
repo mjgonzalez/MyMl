@@ -1,8 +1,9 @@
 dataSource {
-	pooled = true
-	driverClassName = "org.hsqldb.jdbcDriver"
-	username = "sa"
-	password = ""
+//	pooled = true
+	driverClassName = "oracle.jdbc.OracleDriver"
+	dialect='org.hibernate.dialect.Oracle9iDialect'
+	username = "nsuarez"
+	password = "oracle"
 }
 hibernate {
     cache.use_second_level_cache=true
@@ -13,20 +14,8 @@ hibernate {
 environments {
 	development {
 		dataSource {
-			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-			url = "jdbc:hsqldb:mem:devDB"
-		}
-	}
-	test {
-		dataSource {
-			dbCreate = "update"
-			url = "jdbc:hsqldb:mem:testDb"
-		}
-	}
-	production {
-		dataSource {
-			dbCreate = "update"
-			url = "jdbc:hsqldb:file:prodDb;shutdown=true"
+//			dbCreate = "update" // one of 'create', 'create-drop','update'
+			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
 		}
 	}
 }
