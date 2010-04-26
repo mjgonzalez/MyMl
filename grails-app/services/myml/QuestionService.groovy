@@ -8,10 +8,11 @@ class QuestionService {
 //		Question.findAll("from Question as q where q.sellerId = ?", sellerId)
 		//OPCION 1:		Question.findAll("from Question as q where q.sellerId = ? and answerText is null", sellerId)
 		//OPCION 2: Muy Agile y scriptosa
-		Question.createCriteria().list {
-			eq("sellerId", sellerId)
-			isNull("answerText")
-		}
+//		Question.createCriteria().list {
+//			eq("sellerId", sellerId)
+//			isNull("answerText")
+//		}
+		Question.list()
 	}
 	
 	void answerQuestion(Long questionId, String answerText){
