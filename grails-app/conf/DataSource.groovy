@@ -18,4 +18,11 @@ environments {
 			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
 		}
 	}
+	
+	test {
+		dataSource {
+			dbCreate = "create" // one of 'create', 'create-drop','update'
+			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
+		}
+	}
 }
