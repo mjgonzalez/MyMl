@@ -17,6 +17,7 @@ class QuestionController {
 	
 	def deleteQuestion = {
 		questionService.deleteQuestion(params.questionId as Long)
+		//un cambio
 		render "ok"
-	}
+	} 
 }
