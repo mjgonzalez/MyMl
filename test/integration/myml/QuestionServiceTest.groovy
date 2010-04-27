@@ -52,6 +52,9 @@ class QuestionServiceTest extends GrailsUnitTestCase{
 		assertEquals answerText, answer.answerText
 	}
 	
+	/*
+	 * Testea la respuesta sobre una pregunta que se encuentra en una lista de pendientes 
+	 */
 	void testAnswerOneQuestionOfAList(){
 //		INVESTIGAR SOBRE MOCKS!!		
 //		mockDomain(Answer)
