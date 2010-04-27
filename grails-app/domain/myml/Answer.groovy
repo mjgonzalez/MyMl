@@ -2,6 +2,10 @@ package myml
 
 class Answer {
 	String answerText
-	Calendar creationDate
+	Date dateCreated
 	static belongsTo = [question:Question]
+	                    
+	static constraints = {
+		answerText(maxSize:2000)
+	}
 }

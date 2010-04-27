@@ -5,7 +5,12 @@ class Question {
 	Long sellerId
 	String askerNickname
 	String questionText
-	Calendar creationDate
+	Date dateCreated
+	Boolean processed = false
 	static belongsTo = [item:Item]
-	static hasOne = [answer:Answer, action:QuestionAction]
+	     
+	static constraint = {
+		questionText(maxSize:2000)
+		askerNickname(maxSize:30)
+	}
 }

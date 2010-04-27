@@ -1,10 +1,12 @@
 package myml
 
-
+import grails.converters.JSON
+import grails.converters.XML
 
 class QuestionController {
 	QuestionService questionService
 	def defaultAction = 'pendingQuestions'
+	def scaffold = true 
 	
 	def pendingQuestions = {
 		[questions:questionService.getPendingQuestions(1)]
@@ -20,4 +22,13 @@ class QuestionController {
 		//un cambio
 		render "ok"
 	} 
+	
+	def restXML = {
+		render Question.list() as XML
+	}
+	
+
+	def restJSON = {
+		render Question.list() as JSON
+	}
 }

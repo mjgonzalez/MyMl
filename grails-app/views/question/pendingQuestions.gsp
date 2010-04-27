@@ -16,7 +16,7 @@
 				${q.questionText}
 				<g:form name="questionAnswerForm${q.id}" url="[controller:'question']">
 					<g:hiddenField name = "questionId" value="${q.id}"/>
-					<g:textArea name="responseText" value="${q.answerText}" rows="5" cols="40"/>
+					<g:textArea name="responseText" rows="5" cols="40"/>
 					<g:submitToRemote value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
 					<g:submitToRemote value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
 				</g:form>

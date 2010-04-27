@@ -3,6 +3,6 @@ package myml
 class QuestionAction {
 	Long id
 	String actionType
-	Date creationDate
+	Date dateCreated
 	static belongsTo = [question:Question]
 }
