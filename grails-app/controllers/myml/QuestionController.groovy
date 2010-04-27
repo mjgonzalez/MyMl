@@ -5,7 +5,7 @@ package myml
 class QuestionController {
 	QuestionService questionService
 	def defaultAction = 'pendingQuestions'
-		
+	
 	def pendingQuestions = {
 		[questions:questionService.getPendingQuestions(1)]
 	}
