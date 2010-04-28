@@ -94,6 +94,9 @@ class QuestionServiceTest extends GrailsUnitTestCase{
 		assertFalse questionService.getPendingQuestions(sellerId).isEmpty()
 	}
 	
+	/*
+	 * Testea la respuesta sobre una pregunta que se encuentra en una lista de pendientes 
+	 */
 	void testAnswerOneQuestionOfAList(){
 //		INVESTIGAR SOBRE MOCKS!!		
 //		mockDomain(Answer)
