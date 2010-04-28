@@ -9,7 +9,7 @@ class QuestionController {
 	def scaffold = true 
 	
 	def pendingQuestions = {
-		[questions:questionService.getPendingQuestions(1)]
+		[questions:questionService.getPendingQuestions(params.id as Long)]
 	}
 	
 	def answerQuestion = {
