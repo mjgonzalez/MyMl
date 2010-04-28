@@ -24,8 +24,17 @@ class RestController {
   }
   
   private format(obj) {
-    def restType = (params.type == "xml")?"XML":"JSON"
-    render obj."encodeAs$restType"()
+	def restType
+	def contentType
+	if(params.type == "xml"){
+		restType = "XML"
+		contentType = "text/xml"
+	}else{
+		restType = "JSON"
+		contentType = "application/json"
+	}
+    		
+    render contentType: contentType, charset:"iso-8859-1", text:obj."encodeAs$restType"()
   }
   
   def show = {
