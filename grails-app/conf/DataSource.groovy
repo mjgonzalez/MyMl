@@ -17,14 +17,26 @@ environments {
 		}
 	}
 	
+//	test {
+//		dataSource {
+//			pooled = true
+//			driverClassName = "org.hsqldb.jdbcDriver"
+//			username = "sa"
+//			password = ""
+//			dbCreate = "create-drop"
+//			url = "jdbc:hsqldb:mem:testDb"
+//		}
+//	}
+	
 	test {
 		dataSource {
-			pooled = true
-			driverClassName = "org.hsqldb.jdbcDriver"
-			username = "sa"
-			password = ""
-			dbCreate = "create-drop"
-			url = "jdbc:hsqldb:mem:testDb"
+			driverClassName = "oracle.jdbc.OracleDriver"
+			dialect='org.hibernate.dialect.Oracle9iDialect'
+			username = "nsuarez"
+			password = "oracle"
+			dbCreate = "create" // one of 'create', 'create-drop','update'
+			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
+//			pooled = true
 		}
 	}
 }
