@@ -5,6 +5,12 @@ hibernate {
 }
 // environment specific settings
 environments {
+	ci {
+	     dataSource {
+		dbCreate = "create-drop"
+		url = "jdbc:hsqldb:mem:ciDB"
+             }
+    	   }
 	development {
 		dataSource {
 			driverClassName = "oracle.jdbc.OracleDriver"
