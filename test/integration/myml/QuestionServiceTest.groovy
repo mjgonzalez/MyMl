@@ -98,21 +98,18 @@ class QuestionServiceTest extends GrailsUnitTestCase{
 	 * Testea la respuesta sobre una pregunta que se encuentra en una lista de pendientes 
 	 */
 	void testAnswerOneQuestionOfAList(){
-		def sellerId = 1
-		
-		//Mockeamos el dominio con nada en la "base"
-		mockDomain(Question, [])
-		
+	
+	
 		def i = new Item(siteId:"MLA", title:"Item de Testeo CASO Una sola pregunta")
 		//Mockeamos el item
-		mockDomain(Item,[i])
 		i.save()
 		
+		//Creamos una pregunta a la cual vamos a responder
 		def question = new Question(sellerId:1, askerNickname:"TESTMLA003",
 									questionText:"Tenés stock?", item:i)
 		question.save()
 		
-		//
+		//Creamos una pregunta a la cual NO vamos a responder
 		def question2 = new Question(sellerId:1, askerNickname:"TESTMLA003",
 									questionText:"Tenés stock?", item:i)
 		question2.save()
@@ -120,28 +117,28 @@ class QuestionServiceTest extends GrailsUnitTestCase{
 		//Comprobamos que hayan dos preguntas pendientes
 		//TODO entender por que no funciona el findAll
 		assertEquals 2, Question.findAllBySellerId(1).size()
-		assertEquals 2, Question.list().size()
-		
-		//Mockeamos el servicio
-		def qService = mockFor(QuestionService)
-		
-		//Preparamos el método que vamos a usar con 1 sola llamada
-		qService.demand.answerQuestion(1..1)
+//		assertEquals 2, Question.list().size()
+////		
+////		//Mockeamos el servicio
+////		def qService = mockFor(QuestionService)
+//		
+//		//Preparamos el método que vamos a usar con 1 sola llamada
+//		qService.demand.answerQuestion(1..1)
 //		//Respondemos la pregunta
-//		questionService.answerQuestion(question.id, "No me queda más nada")
-//		
+		questionService.answerQuestion(question.id, "No me queda más nada")
+		
 //		//Comprobamos que exista la respuesta
-//		def answer = Answer.findByQuestion(question)
-//		
-//		assertEquals answer.answerText, "No me queda más nada"
-//		assertEquals answer.question.id, question.id
+		def answer = Answer.findByQuestion(question)
+		
+		assertEquals answer.answerText, "No me queda más nada"
+		assertEquals answer.question.id, question.id
 //		
 //		//Comprobamos que exista la acción realizada
-//		def questionAction = QuestionAction.findByQuestion(question)
-//		assertEquals questionAction.actionType, "ANSWER"
-//		assertEquals questionAction.question.id, question.id
+		def questionAction = QuestionAction.findByQuestion(question)
+		assertEquals questionAction.actionType, "ANSWER"
+		assertEquals questionAction.question.id, question.id
 //		
 //		//Comprobamos que quede 1 pregunta por responder
-//		assertEquals 1, questionService.getPendingQuestions(1).size()
+		assertEquals 1, questionService.getPendingQuestions(1).size()
 	}
 }
