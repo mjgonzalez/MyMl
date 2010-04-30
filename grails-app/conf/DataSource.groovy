@@ -21,7 +21,7 @@ environments {
 			dialect='org.hibernate.dialect.Oracle9iDialect'
 			username = "nsuarez"
 			password = "oracle"
-			//			dbCreate = "create" // one of 'create', 'create-drop','update'
+			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
 			//			pooled = true
 		}
