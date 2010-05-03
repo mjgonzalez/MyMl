@@ -31,10 +31,10 @@ class RestController {
 		contentType = "text/xml"
 	}else{
 		restType = "JSON"
-		contentType = "application/json"
+		contentType = "text/javascript"
 	}
     		
-    render contentType: contentType, charset:"iso-8859-1", text:obj."encodeAs$restType"()
+    render contentType: contentType, charset: "iso-8859-1", text: obj."encodeAs$restType"()
   }
   
   def show = {

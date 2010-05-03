@@ -1,5 +1,5 @@
 package myml
 
-class QuestionController {
+class CustomerController{
 	def scaffold = true
 }
