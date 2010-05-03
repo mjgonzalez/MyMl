@@ -13,8 +13,18 @@ class QuestionController {
 	}
 	
 	def answerQuestion = {
-		questionService.answerQuestion(params.questionId as Long, params.responseText)
-		render "hola"
+		def answer = new Answer(params)
+		
+		if(answer.validate()){
+			//arreglar esto :P
+			questionService.answerQuestion(params.questionId as Long, params.responseText)
+			render "hola"	
+			
+		}else{
+			flash.message = "Error respondiendo una pregunta"
+			return [answer: answer]
+		}
+		
 	}
 	
 	def deleteQuestion = {

@@ -6,6 +6,6 @@ class Answer {
 	static belongsTo = [question:Question]
 	                    
 	static constraints = {
-		answerText(maxSize:2000)
+		answerText(maxSize:2000, black:false)
 	}
 }
