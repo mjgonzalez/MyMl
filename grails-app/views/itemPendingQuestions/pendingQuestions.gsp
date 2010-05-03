@@ -12,18 +12,22 @@
 	Long sellerId-->
 	<g:if test="${items}">
 		<g:each var="item" in="${items}">
-			${item.title}
-			<g:each var="q" in="${item.pendingQuestions}">
-				<div id="div${q.id}">
-					${q.sender.nickname}: ${q.questionText}
-					<g:form name="questionAnswerForm${q.id}" url="[controller:'question']">
-						<g:hiddenField name = "questionId" value="${q.id}"/>
-						<g:textArea name="responseText" rows="5" cols="40"/>
-						<g:submitToRemote value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
-						<g:submitToRemote value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
-					</g:form>
-				</div>
-			</g:each>
+			<g:if test="${item.pendingQuestions}">
+				${item.title}
+				<g:each var="q" in="${item.pendingQuestions}">
+					<div id="div${q.id}">
+						${q.sender.nickname}: ${q.questionText}
+						<g:form name="questionAnswerForm${q.id}" url="[controller:'question']">
+							<g:hiddenField name = "questionId" value="${q.id}"/>
+							<div>
+								<g:textArea name="responseText" rows="5" cols="40"/>
+							</div>
+							<g:submitToRemote value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
+							<g:submitToRemote value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
+						</g:form>
+					</div>
+				</g:each>
+			</g:if>
 		</g:each>
 	</g:if>
 	<g:else>
