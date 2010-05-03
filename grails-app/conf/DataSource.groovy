@@ -1,25 +1,29 @@
 hibernate {
-    cache.use_second_level_cache=true
-    cache.use_query_cache=true
-    cache.provider_class='net.sf.ehcache.hibernate.EhCacheProvider'
+	cache.use_second_level_cache=false
+	cache.use_query_cache=false
+	cache.provider_class='net.sf.ehcache.hibernate.EhCacheProvider'
 }
 // environment specific settings
 environments {
-	development {
+	ci {
 		dataSource {
-//			pooled = true
-//			driverClassName = "oracle.jdbc.OracleDriver"
-//			dialect='org.hibernate.dialect.Oracle9iDialect'
-//			username = "msanfilippo"
-//			password = "oracle"
-//			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-//			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
 			pooled = true
 			driverClassName = "org.hsqldb.jdbcDriver"
 			username = "sa"
 			password = ""
-			dbCreate = "update"
-			url = "jdbc:hsqldb:file:testDb"
+			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			url = "jdbc:hsqldb:mem:ciDB"
+		}
+	}
+	development {
+		dataSource {
+			driverClassName = "oracle.jdbc.OracleDriver"
+			dialect='org.hibernate.dialect.Oracle9iDialect'
+			username = "nsuarez"
+			password = "oracle"
+			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
+			//			pooled = true
 		}
 	}
 	
@@ -29,8 +33,8 @@ environments {
 			driverClassName = "org.hsqldb.jdbcDriver"
 			username = "sa"
 			password = ""
-			dbCreate = "create-drop"
-			url = "jdbc:hsqldb:mem:testDb"
+			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			url = "jdbc:hsqldb:mem:testDB"
 		}
 	}
 }
