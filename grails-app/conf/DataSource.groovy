@@ -41,6 +41,13 @@ environments {
 			password = ""
 			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			url = "jdbc:hsqldb:mem:testDB"
+//			driverClassName = "oracle.jdbc.OracleDriver"
+//			dialect='org.hibernate.dialect.Oracle10gDialect'
+//			username = "myml"
+//			password = "oracle"
+//			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+//			url = "jdbc:oracle:thin:@localhost:1521:xe"
+//			pooled = true
 		}
 	}
 }
