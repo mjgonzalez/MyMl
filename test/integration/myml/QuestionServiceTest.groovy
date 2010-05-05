@@ -98,46 +98,47 @@ class QuestionServiceTest extends GrailsUnitTestCase{
 	 * Testea la respuesta sobre una pregunta que se encuentra en una lista de pendientes 
 	 */
 	void testAnswerOneQuestionOfAList(){
-//		INVESTIGAR SOBRE MOCKS!!		
-//		mockDomain(Answer)
-//		mockDomain(Question)
-//		mockDomain(QuestionAction)
-//		mockDomain(Item)
-		
-		//Borramos todos los registros
-		Question.findAllBySellerId(1)*.delete
-		
+	
+	
 		def i = new Item(siteId:"MLA", title:"Item de Testeo CASO Una sola pregunta")
+		//Mockeamos el item
 		i.save()
 		
-		
+		//Creamos una pregunta a la cual vamos a responder
 		def question = new Question(sellerId:1, askerNickname:"TESTMLA003",
 									questionText:"Tenés stock?", item:i)
 		question.save()
 		
-		//
+		//Creamos una pregunta a la cual NO vamos a responder
 		def question2 = new Question(sellerId:1, askerNickname:"TESTMLA003",
 									questionText:"Tenés stock?", item:i)
 		question2.save()
 		
-		//Comprobamos que haya dos preguntas pendientes
+		//Comprobamos que hayan dos preguntas pendientes
+		//TODO entender por que no funciona el findAll
 		assertEquals 2, Question.findAllBySellerId(1).size()
-		
-		//Respondemos la pregunta
+//		assertEquals 2, Question.list().size()
+////		
+////		//Mockeamos el servicio
+////		def qService = mockFor(QuestionService)
+//		
+//		//Preparamos el método que vamos a usar con 1 sola llamada
+//		qService.demand.answerQuestion(1..1)
+//		//Respondemos la pregunta
 		questionService.answerQuestion(question.id, "No me queda más nada")
 		
-		//Comprobamos que exista la respuesta
+//		//Comprobamos que exista la respuesta
 		def answer = Answer.findByQuestion(question)
 		
 		assertEquals answer.answerText, "No me queda más nada"
 		assertEquals answer.question.id, question.id
-		
-		//Comprobamos que exista la acción realizada
+//		
+//		//Comprobamos que exista la acción realizada
 		def questionAction = QuestionAction.findByQuestion(question)
 		assertEquals questionAction.actionType, "ANSWER"
 		assertEquals questionAction.question.id, question.id
-		
-		//Comprobamos que quede 1 pregunta por responder
+//		
+//		//Comprobamos que quede 1 pregunta por responder
 		assertEquals 1, questionService.getPendingQuestions(1).size()
 	}
 }

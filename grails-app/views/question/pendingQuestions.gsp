@@ -1,33 +1,24 @@
 <head>
-	<title>Preguntas</title>
+	<title>${message(code:'questions.pendingQuestions.title')}</title>
 	<meta name="layout" content="main"></meta>
 </head>
 
 <body>
-	<h1>${message(code:'questions.page.title')}</h1>
 	<!--Long id
 	String questionText
 	String answerText
 	Long itemId
 	Long askerId
 	Long sellerId-->
-	
-	<g:hasErrors>
-	   	<div class="errors">
-	       <g:renderErrors bean="${answer}" as="list" />
-	   	</div>
-	</g:hasErrors>
-	
-	
 	<g:if test="${questions}">
 		<g:each var="q" in="${questions}">
 			<div id="div${q.id}">
 				${q.questionText}
 				<g:form name="questionAnswerForm${q.id}" url="[controller:'question']">
 					<g:hiddenField name = "questionId" value="${q.id}"/>
-					<g:textArea name="answerText" rows="5" cols="40" value=${answer?.answerText}/>
-					<g:submitToRemote value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
-					<g:submitToRemote value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
+					<g:textArea name="responseText" rows="5" cols="40"/>
+					<g:submitToRemote name="btnAnswer${q.id}" value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv('div${q.id}')"/>
+					<g:submitToRemote name="btnDelete${q.id}" value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv('div${q.id}')"/>
 				</g:form>
 			</div>
 		</g:each>
@@ -38,8 +29,8 @@
 
 	<script>
 		function deleteQuestionDiv(id){
-			$("div"+id).style.visible = false;
-			$("div"+id).style.display = 'none';
+			var o = document.getElementById(id);
+			o.parentNode.removeChild(o);
 		}
 	</script>
 </body>
