@@ -2,21 +2,14 @@ package myml;
 
 class SellerActiveItemsWebTests extends grails.util.WebTest{
 	def sellerItems
-	
-	void testSellerActiveItemsListed(){
-//    	def sellerItems = insertSellerMockActiveItems()
-    	
-    	webtest("Como seller dedo poder ver el listado de articulos activos"){
-    		goToSellerActiveItems(sellerItems[0].seller.id)
-    		
-    		assertHasItemListed(sellerItems)
-    	}
-    }
-    
+	def sellerId
+
     void setUp(){
     	Customer c = new Customer(nickname:"TEST1")
     	
     	c.save()
+    	
+    	sellerId = c.id
     	
     	sellerItems = [new Item(title:"Libro Analisis Y Diseño De Sistemas De Kendall Y Kendall", siteId:"MLA", seller:c, status:"A", 
     							vipURL:"http://www.mercadolibre.com.ar/jm/item?site=MLA&id=84213167",
@@ -28,7 +21,14 @@ class SellerActiveItemsWebTests extends grails.util.WebTest{
     	                		quantitySelled:0, offersReceived:1,quantityAvailable:1)]
     	
     	sellerItems*.save()
-    	
+    }
+	
+	void testSellerActiveItemsListed(){
+    	webtest("Como seller dedo poder ver el listado de articulos activos"){
+    		goToSellerActiveItems(sellerItems[0].seller.id)
+    		
+    		assertHasItemListed(sellerItems)
+    	}
     }
     
     void goToSellerActiveItems(sellerId){
