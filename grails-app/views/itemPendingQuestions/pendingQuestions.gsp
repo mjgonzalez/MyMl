@@ -1,5 +1,5 @@
 <head>
-	<title>Preguntas</title>
+	<title>${message(code:'questions.pendingQuestions.title')}</title>
 	<meta name="layout" content="main"></meta>
 </head>
 
@@ -22,8 +22,8 @@
 							<div>
 								<g:textArea name="responseText" rows="5" cols="40"/>
 							</div>
-							<g:submitToRemote value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
-							<g:submitToRemote value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv(${q.id})"/>
+							<g:submitToRemote name="btnAnswer${q.id}" value="${message(code:'questions.answer')}" action="answerQuestion" update="messages" onSuccess="deleteQuestionDiv('div${q.id}')"/>
+							<g:submitToRemote name="btnDelete${q.id}" value="${message(code:'questions.delete')}" action="deleteQuestion" update="messages" onSuccess="deleteQuestionDiv('div${q.id}')"/>
 						</g:form>
 					</div>
 				</g:each>
@@ -36,8 +36,8 @@
 
 	<script>
 		function deleteQuestionDiv(id){
-			$("div"+id).style.visible = false;
-			$("div"+id).style.display = 'none';
+			var o = document.getElementById(id);
+			o.parentNode.removeChild(o);
 		}
 	</script>
 </body>
