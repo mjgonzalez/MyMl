@@ -24,7 +24,13 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
+    	test('net.sourceforge.htmlunit:htmlunit:2.5') {
+            excludes 'xalan' // IVY-1006 - use xalan 2.7.0 to avoid (see below)
+            excludes 'xml-apis' // GROOVY-3356
+	    }
+	    test('xalan:xalan:2.7.0') {
+	            excludes 'xml-apis' // GROOVY-3356
+	    }
         // runtime 'mysql:mysql-connector-java:5.1.5'
     }
 
