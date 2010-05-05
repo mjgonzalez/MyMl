@@ -1,4 +1,4 @@
-package myml;
+package myml
 
 class SellerActiveItemsWebTests extends grails.util.WebTest{
 	def sellerItems
