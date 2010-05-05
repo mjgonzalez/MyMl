@@ -1,10 +1,9 @@
 package myml
 
 class PreguntasPendientesWebTests extends grails.util.WebTest {
-	def itemService
-	def questionToAnswerId
-	def questionNotToAnswerId
-	def sellerTestId
+	def questionToAnswer
+	def questionNotToAnswer
+	def sellerTest
 	
 	/*
 	 * Inicializamos el test. 
@@ -14,57 +13,53 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		def s = new Customer(nickname:"TESTSELLER001")
 		s.save()
 		
-		sellerTestId = s.id
+		sellerTest = s
 		
 		//Creamos el Customer para el buyer
 		def b = new Customer(nickname:"TESTBUYER001")
 		b.save()
 		
 		//Creamos un item al cual asociarle una pregunta
-		def i = new Item(siteId:"MLA", title:"Item de testeo para preguntar",
-						 seller:s)
+		def i = new Item(title:"Item de testeo para preguntar", siteId:"MLA", seller:s, status:"A", 
+    							vipURL:"http://www.mercadolibre.com.ar/jm/item?site=MLA&id=84213167",
+    							mainImageURL:"http://img1.mlstatic.com/jm/img?s=MLA&f=84213167_3249.jpg&v=I", currentPrice:75,
+    				    		quantitySelled:5, offersReceived:1,quantityAvailable:2)
 		i.save()
 		
 		//Creamos una pregunta a la cual poder responder
-		def questionToAnswer = new Question(questionText:"¿Disculpá tenés stock?", item:i,
+		questionToAnswer = new Question(questionText:"¿Disculpá tenés stock?", item:i,
 											sender:s , receiver:b)
 	
 		questionToAnswer.save()
-		
-		//Nos guardamos el id de la pregunta a responder
-		questionToAnswerId = questionToAnswer.id
-		
+
 		//Creamos una segunda pregunta sobre la cual no vamos a hacer nada
-		def questionNotToAnswer = new Question(questionText:"¿Aceptás Mercadopago?",
+		questionNotToAnswer = new Question(questionText:"¿Aceptás Mercadopago?",
 									    	   item:i,	sender:s , receiver:b)
 		
 		questionNotToAnswer.save()
-		
-		//Nos guardamos el id de la pregunta que no vamos a hacer nada
-		questionNotToAnswerId = questionNotToAnswer.id
 	}
 	
 	/*
 	 * Rollback de lo que hizo el test.
 	 */
 	void tearDown(){
-		Question.list().each { it.delete(flush:true) }
-		Item.list().each { it.delete(flush:true) }
-		Customer.list().each { it.delete(flush:true) }
+//		Question.list().each { it.delete(flush:true) }
+//		Item.list().each { it.delete(flush:true) }
+//		Customer.list().each { it.delete(flush:true) }
 	}
 	
-//	/*
-//	 * Chequea que la página de preguntas pendientes exista
-//	 */
-//    void testPendingQuestionsPageExists() {
-//       webtest("Como seller debería poder entrar a mi página de preguntas pendientes"){
-//	    	//Vamos a la pagina de preguntas pendientes
-//	    	goToPendingQuestions(sellerTestId)
-//	    	   
-//	    	//Validamos que haya cargado el título
-//	    	validateTitle("Preguntas pendientes")   
-//       }
-//    }
+	/*
+	 * Chequea que la página de preguntas pendientes exista
+	 */
+    void testPendingQuestionsPageExists() {
+       webtest("Como seller debería poder entrar a mi página de preguntas pendientes"){
+	    	//Vamos a la pagina de preguntas pendientes
+	    	goToPendingQuestions(sellerTest)
+	    	   
+	    	//Validamos que haya cargado el título
+	    	validateTitle("Preguntas pendientes")   
+       }
+    }
 
     /*
      * Chequea que se listen todas las preguntas pendientes del seller
@@ -72,38 +67,35 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
     void testPendingQuestionsListed(){
     	webtest("Como seller dedo poder ver el listado de mis preguntas pendientes"){
     		//Vamos al listado de preguntas pendientes
-    		goToPendingQuestions(sellerTestId)
+    		goToPendingQuestions(sellerTest) 
 			
-			//Chequeamos que se listen todas las preguntas del seller
-	        def preguntasPendientes = getPendingQuestions(sellerTestId)
-	        
-	        preguntasPendientes.each {
-    			validateQuestionExistence(it)
-			}
+			validateQuestionExistence(questionToAnswer)
+			
+			validateQuestionExistence(questionNotToAnswer)
     	}
     }
     
-//    /*
-//     * Chequea que se pueda responder una pregunta pendiente y la misma desaparezca
-//     */
-//	void testUpdatePendingQuestionListingWhenAnswering() {
-//		webtest("Como seller debo poder responder una pregunta pendiente y no verla más"){
-//    		//Vamos al listado de preguntas pendientes
-//			goToPendingQuestions(sellerTestId)
-//
-//			//Respondemos una pregunta del seller
-//			answerPendingQuestion(questionToAnswerId, "Si nos queda bastante stock")
-//
-//			//Chequeo que el listado de preguntas pendientes se haya actualizado
-//			validatePendingQuestionListingUpdated()
-//			
-//			//Volvemos a cargar la página
-//			irAPreguntasPendientes(sellerTestId)
-//			
-//			//Chequeo que el listado de preguntas pendientes se haya actualizado
-//			validatePendingQuestionListingUpdated()
-//		}
-//	}
+    /*
+     * Chequea que se pueda responder una pregunta pendiente y la misma desaparezca
+     */
+	void testUpdatePendingQuestionListingWhenAnswering() {
+		webtest("Como seller debo poder responder una pregunta pendiente y no verla más"){
+    		//Vamos al listado de preguntas pendientes
+			goToPendingQuestions(sellerTest)
+
+			//Respondemos una pregunta del seller
+			answerPendingQuestion(questionToAnswer, "Si nos queda bastante stock")
+
+			//Chequeo que el listado de preguntas pendientes se haya actualizado
+			validatePendingQuestionListingUpdated()
+			
+			//Volvemos a cargar la página
+			goToPendingQuestions(sellerTest)
+			
+			//Chequeo que el listado de preguntas pendientes se haya actualizado
+			validatePendingQuestionListingUpdated()
+		}
+	}
 	
 	/*
 	 * Valida que el listado de preguntas pendiente esté actualizado, o sea la pregunta pendiente esté respondida
@@ -114,15 +106,15 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		validateQuestionDisappeared("¿Disculpá tenés stock?")
 		
 		//Verificamos que la pregunta no respondida esté
-		validatePendingQuestionExists(questionNotToAnswerId)				
+		validatePendingQuestionExists(questionNotToAnswer)				
 	}
     /*
      * Responde la pregunta questionToAnswerId con el texto answerText
      */
-    void answerPendingQuestion(questionToAnswerId, answerText){
-		setInputField value:answerText, formName:"questionAnswerForm${questionToAnswerId}",
+    void answerPendingQuestion(questionToAnswer, answerText){
+		setInputField value:answerText, formName:"questionAnswerForm${questionToAnswer.id}",
 						name:"responseText"
-		clickButton name:"btnAnswer${questionToAnswerId}"
+		clickButton name:"btnAnswer${questionToAnswer.id}"
     }
     
 	/*
@@ -135,17 +127,17 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		}
 	}
 	
-	void validatePendingQuestionExists(id){
+	void validatePendingQuestionExists(q){
 		//Verificamos que la pregunta no respondida esté
-		verifyText text:Question.get(id).questionText
+		verifyText text:q.questionText
 	}
 	
 	/*
 	 * Va al listado de preguntas pendientes del seller
 	 * cuyo id es sellerId
 	 */
-	void goToPendingQuestions(sellerId) {
-		invoke "/itemPendingQuestions/pendingQuestions/${sellerId}"
+	void goToPendingQuestions(seller) {
+		invoke "/itemPendingQuestions/pendingQuestions/${seller.id}"
 	}
 	
 	/*
@@ -160,16 +152,5 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 	 */
 	void validateQuestionExistence(question) {
 		verifyText text:question.questionText
-	}
-	
-	/*
-	 * Devuelve el listado de preguntas pendientes para el sellerId
-	 */
-	def getPendingQuestions(sellerId){
-		def questions = []
-		itemService.getSellerItems(sellerId).each{
-			questions.addAll(it.getPendingQuestions())
-		}
-		questions
 	}
 }
