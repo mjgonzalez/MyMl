@@ -40,15 +40,6 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 	}
 	
 	/*
-	 * Rollback de lo que hizo el test.
-	 */
-	void tearDown(){
-//		Question.list().each { it.delete(flush:true) }
-//		Item.list().each { it.delete(flush:true) }
-//		Customer.list().each { it.delete(flush:true) }
-	}
-	
-	/*
 	 * Chequea que la página de preguntas pendientes exista
 	 */
     void testPendingQuestionsPageExists() {
@@ -115,7 +106,8 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		setInputField value:answerText, formName:"questionAnswerForm${questionToAnswer.id}",
 						name:"responseText"
 		clickButton name:"btnAnswer${questionToAnswer.id}"
-		sleep(2000)
+		//TODO: Parche loco momentáneo para que pueda validar Ajax.... Pensar forma genérica 
+		sleep(seconds:2)
     }
     
 	/*
