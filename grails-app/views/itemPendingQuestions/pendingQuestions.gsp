@@ -16,7 +16,7 @@
 				${item.title}
 				<g:each var="q" in="${item.pendingQuestions}">
 					<div id="div${q.id}">
-						${q.sender.nickname}: ${q.questionText}
+						${q.sender.nickname}: <div id="qText${q.id}">${q.questionText}</div>
 						<g:form name="questionAnswerForm${q.id}" url="[controller:'question']">
 							<g:hiddenField name = "questionId" value="${q.id}"/>
 							<div>
@@ -36,8 +36,7 @@
 
 	<script>
 		function deleteQuestionDiv(id){
-			var o = document.getElementById(id);
-			o.parentNode.removeChild(o);
+			$("#"+id).remove();
 		}
 	</script>
 </body>

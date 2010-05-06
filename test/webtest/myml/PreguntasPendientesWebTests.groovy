@@ -103,7 +103,7 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 	 */
 	void validatePendingQuestionListingUpdated(){
 		//Chequeo que el texto de la pregunta respondida no esté
-		validateQuestionDisappeared("¿Disculpá tenés stock?")
+		validateQuestionDisappeared(questionToAnswer)
 		
 		//Verificamos que la pregunta no respondida esté
 		validatePendingQuestionExists(questionNotToAnswer)				
@@ -115,21 +115,22 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		setInputField value:answerText, formName:"questionAnswerForm${questionToAnswer.id}",
 						name:"responseText"
 		clickButton name:"btnAnswer${questionToAnswer.id}"
+		sleep(2000)
     }
     
 	/*
 	 * Valida que la pregunta haya desaparecido
 	 */
-	void validateQuestionDisappeared(questionText){
+	void validateQuestionDisappeared(question){
 		//Chequeo que el texto de la pregunta respondida no esté
 		not{
-			verifyText text:questionText
+			verifyXPath xpath:"//div[@id='qText$question.id']", text:question.questionText
 		}
 	}
 	
-	void validatePendingQuestionExists(q){
+	void validatePendingQuestionExists(question){
 		//Verificamos que la pregunta no respondida esté
-		verifyText text:q.questionText
+		verifyXPath xpath:"//div[@id='qText$question.id']", text:question.questionText
 	}
 	
 	/*
