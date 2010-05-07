@@ -25,13 +25,13 @@ environments {
 			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
 			//			pooled = true
 			url = "jdbc:hsqldb:file:testDB"
-//			driverClassName = "oracle.jdbc.OracleDriver"
-//			dialect='org.hibernate.dialect.Oracle9iDialect'
-//			username = "nsuarez"
-//			password = "oracle"
-//			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
-//			url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
-//			pooled = true
+			// driverClassName = "oracle.jdbc.OracleDriver"
+			// dialect='org.hibernate.dialect.Oracle9iDialect'
+			// username = "nsuarez"
+			// password = "oracle"
+			// dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			// url = "jdbc:oracle:thin:@10.0.10.22:1521:desa"
+			// pooled = true
 		}
 	}
 
@@ -44,6 +44,13 @@ environments {
 			password = ""
 			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			url = "jdbc:hsqldb:mem:testDB"
+//			driverClassName = "oracle.jdbc.OracleDriver"
+//			dialect='org.hibernate.dialect.Oracle10gDialect'
+//			username = "myml"
+//			password = "oracle"
+//			dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+//			url = "jdbc:oracle:thin:@localhost:1521:xe"
+//			pooled = true
 		}
 	}
 }

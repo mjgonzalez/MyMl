@@ -9,7 +9,7 @@ class ItemPendingQuestionsController {
 	def defaultAction = 'pendingQuestions' 
 	
 	def pendingQuestions = {
-		[items: itemService.getSellerItems(params.id as Long)]
+		[items: itemService.getSellerActiveItems(params.id as Long)]
 	}
 	
 	def answerQuestion = {
