@@ -88,6 +88,30 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		}
 	}
 	
+	
+	 /*
+     * Chequea que se pueda eliminar una pregunta pendiente y la misma desaparezca
+     */
+	void testUpdatePendingQuestionListingWhenDeleting() {
+		webtest("Como seller debo poder eliminar una pregunta pendiente y no verla más"){
+    		//Vamos al listado de preguntas pendientes
+			goToPendingQuestions(sellerTest)
+
+			//Respondemos una pregunta del seller
+			deletePendingQuestion(questionToAnswer)
+
+			//Chequeo que el listado de preguntas pendientes se haya actualizado
+			validatePendingQuestionListingUpdated()
+			
+			//Volvemos a cargar la página
+			goToPendingQuestions(sellerTest)
+			
+			//Chequeo que el listado de preguntas pendientes se haya actualizado
+			validatePendingQuestionListingUpdated()
+		}
+	}
+	
+	
 	/*
 	 * Valida que el listado de preguntas pendiente esté actualizado, o sea la pregunta pendiente esté respondida
 	 * y la no respondida siga apareciendo
@@ -99,6 +123,7 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		//Verificamos que la pregunta no respondida esté
 		validatePendingQuestionExists(questionNotToAnswer)				
 	}
+	
     /*
      * Responde la pregunta questionToAnswerId con el texto answerText
      */
@@ -106,6 +131,15 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 		setInputField value:answerText, formName:"questionAnswerForm${questionToAnswer.id}",
 						name:"responseText"
 		clickButton name:"btnAnswer${questionToAnswer.id}"
+		//TODO: Parche loco momentáneo para que pueda validar Ajax.... Pensar forma genérica 
+		sleep(seconds:2)
+    }
+    
+    /*
+     * Elimina la pregunta questionToAnswer
+     */
+    void deletePendingQuestion(question){
+		clickButton name:"btnDelete${question.id}"
 		//TODO: Parche loco momentáneo para que pueda validar Ajax.... Pensar forma genérica 
 		sleep(seconds:2)
     }
