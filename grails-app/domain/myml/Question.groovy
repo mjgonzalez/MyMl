@@ -10,7 +10,7 @@ class Question {
 	Customer receiver
 	static belongsTo = [item:Item]
 	                    
-	static constraint = {
+	static constraints = {
 		questionText(maxSize:2000)
 	}
 	
