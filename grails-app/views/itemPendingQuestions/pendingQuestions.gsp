@@ -47,31 +47,6 @@
 		</ul>
 		</g:form>
 	</div>
-
-	<script>
-		$(function(){
-			$('input[id*=btnBlock]').click(function() {			
-				$('#blockUsrDiv').dialog({modal: true, resizable: false,
-											title:"Bloquear usuario"});
-				$('[name=idPregunta]').attr('value',$(this).attr('rel'));
-			});			
-		});
-		
-		$(function(){
-			$('input[id*=btnClose]').click(function() {			
-				document.blockForm.reset();
-				$('#blockUsrDiv').dialog("destroy");
-			});			
-		});
-		
-		
-		function bloquearUsuario(){
-			$('#blockUsrDiv').dialog("destroy");
-			deleteQuestionDiv('div'+$('[name=idPregunta]').attr('value'));			
-		}
-		
-		function deleteQuestionDiv(id){
-			$("#"+id).remove();
-		}
-	</script>
+	
+	<g:javascript src="pendingQuestions.js"/>
 </body>
