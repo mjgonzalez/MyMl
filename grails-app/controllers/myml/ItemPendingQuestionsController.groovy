@@ -21,4 +21,10 @@ class ItemPendingQuestionsController {
 		questionService.deleteQuestion(params.questionId as Long)
 		render "ok"
 	} 
+	
+	def blockUser = {
+		//TODO: Guardar el bloqueo para un usuario
+		questionService.deleteQuestion(params.idPregunta as Long)
+		render "ok"
+	}
 }
