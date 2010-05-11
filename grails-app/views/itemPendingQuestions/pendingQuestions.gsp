@@ -38,8 +38,8 @@
 	<div id="blockUsrDiv" style="display:none;">
 		<g:form url="[controller:'itemPendingQuestions']">
 		<input type="hidden" value="" name="idPregunta" />
-			<label for="preguntar">Para preguntar</label> <input id="preguntar" type="checkbox" />
-			<label for="ofertar">Para ofertar</label> <input id="ofertar" type="checkbox" />
+			<label for="preguntar">Para preguntar</label> <input name ="preguntar" id="preguntar" type="checkbox" />
+			<label for="ofertar">Para ofertar</label> <input name ="ofertar" id="ofertar" type="checkbox" />
 			<g:submitToRemote name="btnAceptar" value="Aceptar" action="blockUser" onSuccess="haceMagia();"/>
 		</g:form>
 	</div>

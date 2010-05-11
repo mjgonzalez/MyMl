@@ -82,8 +82,11 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
     			
     		//Aceptar el bloqueo para preguntar
     		clickButton label:"Aceptar"
-
-            //Valido que la pregunta del usuario bloqueado no esté más
+    		
+    		//TODO: Parche loco momentáneo para que pueda validar Ajax.... Pensar forma genérica 
+    		sleep(seconds:2)
+            
+    		//Valido que la pregunta del usuario bloqueado no esté más
             validateQuestionDisappeared(questionNotToAnswer)
             
     		//Voy a la pagina de preguntas pendientes
