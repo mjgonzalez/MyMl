@@ -1,6 +1,7 @@
 <head>
 	<title>${message(code:'questions.pendingQuestions.title')}</title>
 	<meta name="layout" content="main"></meta>
+	<jqui:resources/>
 </head>
 
 <body>
@@ -36,33 +37,41 @@
 	</g:else>
 	
 	<div id="blockUsrDiv" style="display:none;">
-		<g:form url="[controller:'itemPendingQuestions']">
+		<g:form name="blockForm" url="[controller:'itemPendingQuestions']">
+		<ul style="list-style:none;">
 		<input type="hidden" value="" name="idPregunta" />
-			<label for="preguntar">Para preguntar</label> <input name ="preguntar" id="preguntar" type="checkbox" />
-			<label for="ofertar">Para ofertar</label> <input name ="ofertar" id="ofertar" type="checkbox" />
-			<g:submitToRemote name="btnAceptar" value="Aceptar" action="blockUser" onSuccess="haceMagia();"/>
+		<li><input name ="preguntar" id="preguntar" type="checkbox" /><label for="preguntar">Para preguntar</label></li>
+		<li><input name ="ofertar" id="ofertar" type="checkbox" /><label for="ofertar">Para ofertar</label></li>
+		<li><g:submitToRemote name="btnAceptar" value="Aceptar" action="blockUser" onSuccess="bloquearUsuario();"/>
+        <input type="button" id="btnClose" value="Cancelar"/></li>
+		</ul>
 		</g:form>
 	</div>
 
 	<script>
 		$(function(){
 			$('input[id*=btnBlock]').click(function() {			
-				$('#blockUsrDiv').show();
+				$('#blockUsrDiv').dialog({modal: true, resizable: false,
+											title:"Bloquear usuario"});
 				$('[name=idPregunta]').attr('value',$(this).attr('rel'));
 			});			
 		});
 		
-		function haceMagia(){
-			$('#blockUsrDiv').hide();
+		$(function(){
+			$('input[id*=btnClose]').click(function() {			
+				document.blockForm.reset();
+				$('#blockUsrDiv').dialog("destroy");
+			});			
+		});
+		
+		
+		function bloquearUsuario(){
+			$('#blockUsrDiv').dialog("destroy");
 			deleteQuestionDiv('div'+$('[name=idPregunta]').attr('value'));			
 		}
 		
 		function deleteQuestionDiv(id){
 			$("#"+id).remove();
-		}
-		
-		function displayBlockBox(){
-			
 		}
 	</script>
 </body>
