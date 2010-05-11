@@ -23,7 +23,20 @@ class ItemPendingQuestionsController {
 	} 
 	
 	def blockUser = {
-		//TODO: Guardar el bloqueo para un usuario
+		def q =  Question.get(params.idPregunta as Long)
+		
+		if(params.preguntar){
+			def ban = new Ban()
+			
+			ban.banToAsk(q.receiver, q.sender)	
+		}
+		
+		if(params.ofertar){
+			def ban = new Ban()
+			
+			ban.banToBid(q.receiver, q.sender)
+		}
+
 		questionService.deleteQuestion(params.idPregunta as Long)
 		render "ok"
 	}
