@@ -37,7 +37,7 @@
 	</g:else>
 	
 	<div id="blockUsrDiv" style="display:none;">
-		<g:form url="[controller:'itemPendingQuestions']">
+		<g:form name="blockForm" url="[controller:'itemPendingQuestions']">
 		<ul style="list-style:none;">
 		<input type="hidden" value="" name="idPregunta" />
 		<li><input name ="preguntar" id="preguntar" type="checkbox" /><label for="preguntar">Para preguntar</label></li>
@@ -59,6 +59,7 @@
 		
 		$(function(){
 			$('input[id*=btnClose]').click(function() {			
+				document.blockForm.reset();
 				$('#blockUsrDiv').dialog("destroy");
 			});			
 		});
@@ -71,10 +72,6 @@
 		
 		function deleteQuestionDiv(id){
 			$("#"+id).remove();
-		}
-		
-		function displayBlockBox(){
-			
 		}
 	</script>
 </body>
