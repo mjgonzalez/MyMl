@@ -67,8 +67,8 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
     	}
     }
     
-    void testUsuarioBloqueadoParaPreguntar(){
-    	webtest("Como seller debo poder bloquear a un usuario para preguntarme"){
+    void testUsuarioBloqueadoParaPreguntarYOfertar(){
+    	webtest("Como seller debo poder bloquear a un usuario para preguntar y ofertar"){
     		//Voy a la pagina de preguntas pendientes
     		goToPendingQuestions(sellerTest)
     		
@@ -79,7 +79,9 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
     		//Selecciono la opción de bloquear para preguntar
     		//TODO: Preguntar por que no anda el forLabel de webtest htmlunit
     		setCheckbox htmlId:"preguntar"
-    			
+    		
+    		setCheckbox htmlId:"ofertar"
+
     		//Aceptar el bloqueo para preguntar
     		clickButton label:"Aceptar"
     		
