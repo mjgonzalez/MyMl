@@ -37,6 +37,7 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 									    	   item:i,	sender:s , receiver:b)
 		
 		questionNotToAnswer.save()
+		
 	}
 	
 	/*
@@ -63,6 +64,33 @@ class PreguntasPendientesWebTests extends grails.util.WebTest {
 			validateQuestionExistence(questionToAnswer)
 			
 			validateQuestionExistence(questionNotToAnswer)
+    	}
+    }
+    
+    void testUsuarioBloqueadoParaPreguntar(){
+    	webtest("Como seller debo poder bloquear a un usuario para preguntarme"){
+    		//Voy a la pagina de preguntas pendientes
+    		goToPendingQuestions(sellerTest)
+    		
+    		//Clickeo sobre el botón bloquear usuario
+    		clickButton htmlId:"btnBlock${questionNotToAnswer.id}"
+    	
+    		//TODO: Internacionalizar todo esto!!!!!.
+    		//Selecciono la opción de bloquear para preguntar
+    		//TODO: Preguntar por que no anda el forLabel de webtest htmlunit
+    		setCheckbox htmlId:"preguntar"
+    			
+    		//Aceptar el bloqueo para preguntar
+    		clickButton label:"Aceptar"
+
+            //Valido que la pregunta del usuario bloqueado no esté más
+            validateQuestionDisappeared(questionNotToAnswer)
+            
+    		//Voy a la pagina de preguntas pendientes
+        	goToPendingQuestions(sellerTest)
+        	
+        	//Valido que la pregunta del usuario bloqueado no esté más
+        	validateQuestionDisappeared(questionNotToAnswer)
     	}
     }
     
