@@ -13,6 +13,7 @@ class Item {
 	Integer quantitySelled = 0
 	Integer offersReceived = 0
 	Integer quantityAvailable
+	MainCategory mainCategory = MainCategory.CORE
 	
 	static constraints = {
 		title(maxSize:60)
@@ -27,5 +28,9 @@ class Item {
 	
 	Collection<Question> getPendingQuestions(){
 		Question.findAllByItemAndProcessed(this,false)
+	}
+	
+	public static enum MainCategory{
+		CORE,MOTORS,SERVICE,REALSTATE;
 	}
 }

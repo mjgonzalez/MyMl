@@ -2,10 +2,11 @@ package myml.objectaction
 
 import groovy.util.NodeBuilder
 import groovy.util.ObjectGraphBuilder
-import myml.*
+import myml.objectaction.item.*
+import myml.Item
 
 class ObjectActionsManager {
-	Collection<ObjectAction> getItemActions(Item item){
+	Collection getItemActions(Item item){
 		def builder = new NodeBuilder()
 		
 		def actionsConfig = builder.actions{
