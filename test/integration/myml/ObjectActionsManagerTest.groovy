@@ -6,7 +6,7 @@ import myml.objectaction.*
 class ObjectActionsManagerTest extends GrailsUnitTestCase {
 	void testGetItemActions(){
 		Customer seller = new Customer(nickname: "CARACHAUCHA")
-		realStateSeller.save()
+		seller.save()
 		
 		Item realStateItem = new Item()
 		realStateItem.siteId = "MLA"
