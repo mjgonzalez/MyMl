@@ -10,8 +10,8 @@ class Item {
 	BigDecimal currentPrice
 	String mainImageURL
 	String vipURL
-	Integer quantitySelled
-	Integer offersReceived
+	Integer quantitySelled = 0
+	Integer offersReceived = 0
 	Integer quantityAvailable
 	
 	static constraints = {
