@@ -9,7 +9,22 @@ class ItemPendingQuestionsController {
 	def defaultAction = 'pendingQuestions' 
 	
 	def pendingQuestions = {
-		[items: itemService.getSellerActiveItems(params.id as Long)]
+                //TODO: es correcto devolver los items? lo hicimos así para poder agrupar
+                //las preguntas pendientes por item supongo..
+		//[items: itemService.getSellerActiveItems(params.id as Long)]
+                def items =  itemService.getSellerActiveItems(params.id as Long)
+
+                withFormat {
+                    json {
+                        render(contentType:"application/json") {
+                            //esto es feo, lo hago para probar
+                            items.pendingQuestions
+                        }
+                    }
+                    html items:items
+                }
+
+
 	}
 	
 	def answerQuestion = {
